@@ -13,17 +13,32 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import { BookOpen, Folder, LayoutGrid, Package, ShoppingCart } from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
+const page = usePage();
+const cartItemCount = computed(() => (page.props as any).cartItemCount ?? 0);
+
+const mainNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
+    {
+        title: 'Products',
+        href: '/products',
+        icon: Package,
+    },
+    {
+        title: 'Cart',
+        href: '/cart',
+        icon: ShoppingCart,
+        badge: cartItemCount.value,
+    },
+]);
 
 const footerNavItems: NavItem[] = [
     {
