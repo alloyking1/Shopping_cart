@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Product extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'price',
+        'stock_quantity',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'price' => 'decimal:2',
+            'stock_quantity' => 'integer',
+        ];
+    }
+
+    /**
+     * Get the cart items for the product.
+     */
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    /**
+     * Get the order items for the product.
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Check if the product is in stock.
+     */
+    public function isInStock(int $quantity = 1): bool
+    {
+        return $this->stock_quantity >= $quantity;
+    }
+
+    /**
+     * Check if the product is low in stock.
+     */
+    public function isLowStock(int $threshold = 10): bool
+    {
+        return $this->stock_quantity <= $threshold;
+    }
+}
