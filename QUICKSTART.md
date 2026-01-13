@@ -3,7 +3,7 @@
 ## Installation (One-time setup)
 
 ```bash
-cd /Users/moses/Desktop/freelance/job_search/vue-starter-kit
+cd /vue-starter-kit
 
 # Install PHP & Node dependencies
 composer install
@@ -18,30 +18,34 @@ php artisan migrate
 php artisan db:seed  # Seeds AdminUserSeeder for testing notifications
 
 # Build frontend assets
-npm run build
+composer run dev
 ```
 
 ## Running the Application
 
 ### Terminal 1: Start Laravel Server
+
 ```bash
 php artisan serve
 # Server runs at http://localhost:8000
 ```
 
 ### Terminal 2: Process Queue Jobs
+
 ```bash
 php artisan queue:work
 # Keep this running in background to process notifications
 ```
 
 ### Terminal 3 (Optional): Run Scheduler
+
 ```bash
 php artisan schedule:work
 # Runs every minute in development to test scheduled tasks
 ```
 
 ### Terminal 4 (Optional): Watch Frontend Changes
+
 ```bash
 npm run dev
 # Auto-rebuilds Vue components as you edit them
@@ -121,10 +125,12 @@ php artisan db:seed
 ## Key Credentials
 
 **Admin User** (created by seeder):
+
 - Email: `admin@example.com`
 - Password: `password` (or set during registration)
 
 **Test User** (any registered user):
+
 - Can add items to cart
 - Can checkout
 - Can view orders
@@ -133,28 +139,30 @@ php artisan db:seed
 
 ## File Locations
 
-| Feature | Files |
-|---------|-------|
-| Products Page | `resources/js/pages/Products/Index.vue` |
-| Cart Page | `resources/js/pages/Cart/Index.vue` |
-| Order Confirmation | `resources/js/pages/Orders/Show.vue` |
-| Cart Logic | `app/Http/Controllers/CartController.php` |
-| Order Logic | `app/Http/Controllers/OrderController.php` |
-| Notifications | `app/Jobs/LowStockNotification.php`, `app/Observers/ProductObserver.php` |
-| Daily Report | `app/Console/Commands/SendDailySalesReportCommand.php` |
-| Tests | `tests/Feature/*.php` |
+| Feature            | Files                                                                    |
+| ------------------ | ------------------------------------------------------------------------ |
+| Products Page      | `resources/js/pages/Products/Index.vue`                                  |
+| Cart Page          | `resources/js/pages/Cart/Index.vue`                                      |
+| Order Confirmation | `resources/js/pages/Orders/Show.vue`                                     |
+| Cart Logic         | `app/Http/Controllers/CartController.php`                                |
+| Order Logic        | `app/Http/Controllers/OrderController.php`                               |
+| Notifications      | `app/Jobs/LowStockNotification.php`, `app/Observers/ProductObserver.php` |
+| Daily Report       | `app/Console/Commands/SendDailySalesReportCommand.php`                   |
+| Tests              | `tests/Feature/*.php`                                                    |
 
 ---
 
 ## Troubleshooting
 
 ### Queue not processing jobs?
+
 ```bash
 # Make sure queue worker is running
 php artisan queue:work
 ```
 
 ### Tests failing?
+
 ```bash
 # Make sure test database is configured
 # Check .env.testing file exists
@@ -162,12 +170,14 @@ php artisan test --testdox
 ```
 
 ### Products not showing?
+
 ```bash
 # Make sure seeder ran
 php artisan db:seed --class=ProductSeeder
 ```
 
 ### Notifications not sending?
+
 ```bash
 # Check mail configuration in config/mail.php
 # Default is 'log' driver - emails logged to storage/logs/laravel.log
@@ -180,6 +190,7 @@ php artisan db:seed --class=ProductSeeder
 Currently uses **log driver** (emails logged to console/file).
 
 To send real emails, update `.env`:
+
 ```
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.mailtrap.io
@@ -223,6 +234,7 @@ php artisan config:cache
 Your e-commerce application is ready to use. All 8 milestones are complete with 46 passing tests.
 
 For detailed documentation, see:
+
 - `IMPLEMENTATION_COMPLETE.md` - Complete feature list
 - `FINAL_VERIFICATION.md` - Test results and verification
 - `PROJECT_MILESTONES.md` - Original requirements
