@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('cart', [CartController::class, 'store'])->name('cart.store');
     Route::put('cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    // Orders (checkout)
+    Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
 require __DIR__.'/settings.php';

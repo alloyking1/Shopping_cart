@@ -3,7 +3,7 @@ import CartItem from '@/components/cart/CartItem.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 interface Product {
     id: number;
@@ -31,9 +31,14 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/cart',
     },
 ];
+
+const checkout = () => {
+    router.post('/orders', {}, { preserveScroll: false });
+};
 </script>
 
 <template>
+
     <Head title="Shopping Cart" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
@@ -45,11 +50,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
             <div v-if="cartItems.length > 0" class="space-y-6">
                 <div class="space-y-4">
-                    <CartItem
-                        v-for="item in cartItems"
-                        :key="item.id"
-                        :cart-item="item"
-                    />
+                    <CartItem v-for="item in cartItems" :key="item.id" :cart-item="item" />
                 </div>
 
                 <div class="border-t pt-4 space-y-4">
@@ -62,7 +63,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <Link href="/products" as="button">
                             <Button variant="outline">Continue Shopping</Button>
                         </Link>
-                        <Button class="flex-1">Checkout</Button>
+                        <Button class="flex-1" @click="checkout">Checkout</Button>
                     </div>
                 </div>
             </div>
@@ -76,4 +77,3 @@ const breadcrumbs: BreadcrumbItem[] = [
         </div>
     </AppLayout>
 </template>
-
